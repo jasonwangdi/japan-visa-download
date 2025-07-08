@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>日本eVISA首页</title>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>输入手机号</title>
   <style>
     body {
       margin: 0;
@@ -42,8 +42,30 @@
     }
   </style>
 </head>
-    <body><div class="container">
-    <h2>欢迎使用日本eVISA查询</h2>
-    <button onclick="window.location.href='phone.html'">点击查询签证</button>
-    </div></body></html>
+    <body>
+    <div class="container">
+    <h3>请输入预留手机号</h3>
+    <input type="tel" id="phone" placeholder="11位手机号" maxlength="11"/>
+    <br>
+    <button onclick="showAd()">获取验证码</button>
+    </div>
+    <div class="overlay" id="adOverlay">
+      <img src="ad.png" alt="广告">
+    </div>
+    <script>
+      function showAd() {
+        const phone = document.getElementById('phone').value.trim();
+        if (!/^\d{11}$/.test(phone)) {
+          alert('请输入有效手机号');
+          return;
+        }
+        const ad = document.getElementById('adOverlay');
+        ad.style.display = 'flex';
+        setTimeout(() => {
+          ad.style.display = 'none';
+          window.location.href = 'verify.html';
+        }, 3000);
+      }
+    </script>
+    </body></html>
     

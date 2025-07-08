@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>日本eVISA首页</title>
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>验证码验证</title>
   <style>
     body {
       margin: 0;
@@ -42,8 +42,30 @@
     }
   </style>
 </head>
-    <body><div class="container">
-    <h2>欢迎使用日本eVISA查询</h2>
-    <button onclick="window.location.href='phone.html'">点击查询签证</button>
-    </div></body></html>
+    <body>
+    <div class="container">
+    <h3>请输入验证码</h3>
+    <input type="text" id="code" maxlength="4" value="5690"/>
+    <br>
+    <button onclick="submitCode()">确认</button>
+    </div>
+    <div class="overlay" id="adOverlay">
+      <img src="ad.png" alt="广告">
+    </div>
+    <script>
+      function submitCode() {
+        const code = document.getElementById('code').value.trim();
+        if (code === '5690') {
+          const ad = document.getElementById('adOverlay');
+          ad.style.display = 'flex';
+          setTimeout(() => {
+            ad.style.display = 'none';
+            window.location.href = 'result.html';
+          }, 3000);
+        } else {
+          alert('验证码错误，请输入 5690');
+        }
+      }
+    </script>
+    </body></html>
     
