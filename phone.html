@@ -1,11 +1,16 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><title>手机号验证</title>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>手机号验证</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background-color: #e5e5e5;
-      color: #333;
+      text-align: center;
     }
     .wechat-wrapper {
       max-width: 420px;
@@ -21,6 +26,12 @@
       padding: 20px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
+    input {
+      padding: 10px;
+      width: 85%;
+      margin: 10px 0;
+      font-size: 16px;
+    }
     button {
       padding: 12px 20px;
       font-size: 16px;
@@ -29,13 +40,7 @@
       border: none;
       border-radius: 6px;
       width: 90%;
-      margin-top: 15px;
-    }
-    input {
-      padding: 10px;
-      width: 85%;
-      margin: 10px 0;
-      font-size: 16px;
+      margin-top: 10px;
     }
     .overlay {
       display: none;
@@ -47,38 +52,54 @@
       z-index: 1000;
       justify-content: center;
       align-items: center;
+      flex-direction: column;
     }
     .overlay img {
       max-width: 90%;
       border-radius: 10px;
     }
+    .countdown {
+      font-size: 20px;
+      color: white;
+      margin-top: 20px;
+    }
   </style>
 </head>
-    <body><div class="wechat-wrapper">
-      <div class="bubble">
-        <h4>请输入预留手机号</h4>
-        <input type="tel" id="phone" placeholder="11位手机号" maxlength="11"/>
-        <br>
-        <button onclick="showAd()">获取验证码</button>
-      </div>
+<body>
+  <div class="wechat-wrapper">
+    <div class="bubble">
+      <h4>请输入预留手机号</h4>
+      <input type="tel" id="phone" placeholder="11位手机号" maxlength="11"/>
+      <br>
+      <button onclick="showAd()">获取验证码</button>
     </div>
-    <div class="overlay" id="adOverlay">
-      <img src="ad.png" alt="广告图">
-    </div>
-    <script>
-      function showAd() {
-        const phone = document.getElementById('phone').value.trim();
-        if (!/^\d{11}$/.test(phone)) {
-          alert('请输入有效手机号');
-          return;
-        }
-        const ad = document.getElementById('adOverlay');
-        ad.style.display = 'flex';
-        setTimeout(() => {
+  </div>
+  <div class="overlay" id="adOverlay">
+    <img src="ad.png" alt="广告图">
+    <div class="countdown" id="countdownText">3</div>
+  </div>
+  <script>
+    function showAd() {
+      const phone = document.getElementById('phone').value.trim();
+      if (!/^\d{11}$/.test(phone)) {
+        alert('请输入有效手机号');
+        return;
+      }
+      const ad = document.getElementById('adOverlay');
+      const countdown = document.getElementById('countdownText');
+      let seconds = 3;
+      countdown.textContent = seconds;
+      ad.style.display = 'flex';
+      const timer = setInterval(() => {
+        seconds--;
+        countdown.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(timer);
           ad.style.display = 'none';
           window.location.href = 'verify.html';
-        }, 3000);
-      }
-    </script>
-    </body></html>
-    
+        }
+      }, 1000);
+    }
+  </script>
+</body>
+</html>
