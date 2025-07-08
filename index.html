@@ -41,15 +41,24 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    .ad-section {
+    .ad-overlay {
       display: none;
+      position: fixed;
+      top: 0; left: 0;
       width: 100%;
+      height: 100%;
       background-color: #fff;
+      z-index: 999;
       text-align: center;
     }
-    .ad-section img {
+    .ad-overlay img {
       max-width: 100%;
       height: auto;
+      margin-top: 100px;
+    }
+    .ad-static {
+      text-align: center;
+      padding: 10px;
     }
     .visa-info {
       text-align: center;
@@ -87,18 +96,21 @@
     <button onclick="submitCode()">验证</button>
   </div>
 
-  <div class="ad-section" id="ad">
+  <div class="ad-overlay" id="adOverlay">
     <img src="ad.png" alt="广告图">
   </div>
 
   <div class="visa-info" id="visaInfo">
+    <div class="ad-static">
+      <img src="ad.png" alt="广告图">
+    </div>
     <img src="visa_sample.png" alt="签证图">
     <a href="your_visa.pdf" download class="download-btn">下载PDF签证</a>
   </div>
 
   <script>
-    function showAd(seconds, callback) {
-      const ad = document.getElementById('ad');
+    function showAdOverlay(seconds, callback) {
+      const ad = document.getElementById('adOverlay');
       ad.style.display = 'block';
       setTimeout(() => {
         ad.style.display = 'none';
@@ -112,7 +124,7 @@
         alert("请输入正确的11位手机号");
         return;
       }
-      showAd(4, () => {
+      showAdOverlay(4, () => {
         document.getElementById('phone-form').style.display = 'none';
         document.getElementById('code-form').style.display = 'block';
       });
@@ -123,7 +135,6 @@
       if (code === "0000") {
         document.getElementById('code-form').style.display = 'none';
         document.getElementById('visaInfo').style.display = 'block';
-        document.getElementById('ad').style.display = 'block'; // 保持广告显示，但不遮挡
       } else {
         alert("验证码错误，请输入 0000");
       }
