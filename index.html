@@ -43,18 +43,13 @@
     }
     .ad-section {
       display: none;
-      position: fixed;
-      top: 0; left: 0;
       width: 100%;
-      height: 100%;
       background-color: #fff;
-      z-index: 999;
       text-align: center;
     }
     .ad-section img {
       max-width: 100%;
       height: auto;
-      margin-top: 100px;
     }
     .visa-info {
       text-align: center;
@@ -128,7 +123,7 @@
       if (code === "0000") {
         document.getElementById('code-form').style.display = 'none';
         document.getElementById('visaInfo').style.display = 'block';
-        document.getElementById('ad').style.display = 'block'; // 第二次广告永久显示
+        document.getElementById('ad').style.display = 'block'; // 保持广告显示，但不遮挡
       } else {
         alert("验证码错误，请输入 0000");
       }
