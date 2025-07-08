@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>日本eVISA下载</title>
+  <title>日本签证eVISA下载</title>
   <style>
     body {
       margin: 0;
@@ -19,10 +19,6 @@
       display: flex;
       align-items: center;
       font-size: 16px;
-    }
-    .back {
-      margin-right: 10px;
-      font-size: 18px;
     }
     .form-box {
       padding: 20px;
@@ -45,9 +41,25 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    .ad-section, .visa-info {
+    .ad-section {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      z-index: 999;
+      text-align: center;
+    }
+    .ad-section img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 100px;
+    }
+    .visa-info {
       text-align: center;
       padding: 20px;
+      display: none;
     }
     .visa-info img {
       max-width: 100%;
@@ -67,37 +79,59 @@
 </head>
 <body>
   <div class="wechat-header">
-    <span class="back">&lt;</span>
-    渋谷美香外科クリニック
+    日本签证eVISA下载
   </div>
 
-  <div class="form-box">
+  <div class="form-box" id="phone-form">
     <input type="tel" id="phone" placeholder="请输入预留手机号" maxlength="11" />
-    <input type="text" id="code" placeholder="请输入验证码" value="0000" />
-    <button onclick="startProcess()">确认</button>
+    <button onclick="submitPhone()">下一步</button>
   </div>
 
-  <div class="ad-section" id="ad" style="display:none;">
+  <div class="form-box" id="code-form" style="display:none;">
+    <input type="text" id="code" placeholder="请输入验证码" maxlength="4" />
+    <button onclick="submitCode()">验证</button>
+  </div>
+
+  <div class="ad-section" id="ad">
     <img src="ad.png" alt="广告图">
   </div>
 
-  <div class="visa-info" id="visaInfo" style="display:none;">
+  <div class="visa-info" id="visaInfo">
     <img src="visa_sample.png" alt="签证图">
     <a href="your_visa.pdf" download class="download-btn">下载PDF签证</a>
   </div>
 
   <script>
-    function startProcess() {
+    function showAd(seconds, callback) {
+      const ad = document.getElementById('ad');
+      ad.style.display = 'block';
+      setTimeout(() => {
+        ad.style.display = 'none';
+        if (callback) callback();
+      }, seconds * 1000);
+    }
+
+    function submitPhone() {
       const phone = document.getElementById('phone').value.trim();
       if (!/^\d{11}$/.test(phone)) {
-        alert('请输入正确的11位手机号');
+        alert("请输入正确的11位手机号");
         return;
       }
-      document.getElementById('ad').style.display = 'block';
-      setTimeout(() => {
-        document.getElementById('ad').style.display = 'none';
+      showAd(4, () => {
+        document.getElementById('phone-form').style.display = 'none';
+        document.getElementById('code-form').style.display = 'block';
+      });
+    }
+
+    function submitCode() {
+      const code = document.getElementById('code').value.trim();
+      if (code === "0000") {
+        document.getElementById('code-form').style.display = 'none';
         document.getElementById('visaInfo').style.display = 'block';
-      }, 3000);
+        document.getElementById('ad').style.display = 'block'; // 第二次广告永久显示
+      } else {
+        alert("验证码错误，请输入 0000");
+      }
     }
   </script>
 </body>
